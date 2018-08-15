@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
-
     private static final String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
+    private static final String KEY_IMG_PATH = "tempImagePathKey";
 
     private ImageView mImageView;
 
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTitleTextView;
 
     private String mTempPhotoPath;
-
     private Bitmap mResultsBitmap;
 
 
@@ -72,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
         mSaveFab = (FloatingActionButton) findViewById(R.id.save_button);
         mClearFab = (FloatingActionButton) findViewById(R.id.clear_button);
         mTitleTextView = (TextView) findViewById(R.id.title_text_view);
+
+        // Check whether we're recreating a previously destroyed instance
+        if (savedInstanceState != null) {
+            // Restore value of members from saved state
+            mTempPhotoPath = savedInstanceState.getString(KEY_IMG_PATH);
+        }
     }
 
     /**
@@ -152,6 +157,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // Save the user's current game state
+        outState.putString(KEY_IMG_PATH, mTempPhotoPath);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -227,6 +238,12 @@ public class MainActivity extends AppCompatActivity {
         mSaveFab.setVisibility(View.GONE);
         mClearFab.setVisibility(View.GONE);
         // Delete the temporary image file
-        BitmapUtils.deleteImageFile(this, mTempPhotoPath);
+        try {
+            BitmapUtils.deleteImageFile(this, mTempPhotoPath);
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "No image to delete.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
