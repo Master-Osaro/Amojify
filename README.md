@@ -1,5 +1,9 @@
 # Amojify
 This app takes a picture of you with the device camera, detects faces in the picture using the Google Vision Library and returns the photo with a blob emoji smiling or frown overlay based on the user's facial expression. 
+
+* Download apk [here](https://goo.gl/YGJ3xu)
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
