@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void emojifyMe(View view) {
         // Check for the external storage permission
+        // ContextCompat - Helper to access features in context
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
